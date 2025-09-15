@@ -8,4 +8,17 @@ public class Edge {
         this.source = source;
         this.target = target;
     }
+
+    public Node getSource() {
+        return source;
+    }
+
+    public Node getTarget() {
+        return target;
+    }
+
+    @Override
+    public String toString() {
+        return source + " --- " + target;
+    }
 }

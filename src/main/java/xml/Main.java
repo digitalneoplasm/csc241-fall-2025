@@ -18,11 +18,13 @@ public class Main {
             parser.parse(input, handler);
         }
         catch (IOException e) {
-            System.out.println("Unable to open file.");
+            System.err.println("Unable to open file.");
         } catch (ParserConfigurationException e) {
-            throw new RuntimeException(e);
+            System.err.println("Unable to configure parser.");
+            e.printStackTrace();
         } catch (SAXException e) {
-            throw new RuntimeException(e);
+            System.err.println("Unable to parse XML.");
+            e.printStackTrace();
         }
     }
 }
