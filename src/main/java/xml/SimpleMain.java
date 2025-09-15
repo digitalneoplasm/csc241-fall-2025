@@ -8,14 +8,14 @@ import javax.xml.parsers.SAXParserFactory;
 import java.io.IOException;
 import java.io.InputStream;
 
-public class Main {
+public class SimpleMain {
     public static void main(String[] args) {
         SAXParserFactory spf = SAXParserFactory.newInstance();
 
-        try (InputStream input = Main.class.getClassLoader()
-                .getResourceAsStream("graphml2.xml")) {
+        try (InputStream input = SimpleMain.class.getClassLoader()
+                .getResourceAsStream("graphml1.xml")) {
             SAXParser parser = spf.newSAXParser();
-            GraphMLHandler handler = new GraphMLHandler();
+            SimpleXMLHandler handler = new SimpleXMLHandler();
             parser.parse(input, handler);
         }
         catch (IOException e) {
