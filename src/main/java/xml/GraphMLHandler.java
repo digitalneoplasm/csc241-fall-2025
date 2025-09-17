@@ -10,6 +10,7 @@ public class GraphMLHandler extends DefaultHandler {
     private Graph graph;
     private List<Key> keys = new ArrayList<>();
     private Key currentKey;
+    private StringBuilder currentText;
 
     @Override
     public void startDocument() {
@@ -36,7 +37,15 @@ public class GraphMLHandler extends DefaultHandler {
             graph.addEdge(e);
         }
         if (qName.equals("key")) {
-
+            String id = attributes.getValue("id");
+            String whatFor = attributes.getValue("for");
+            String attrName = attributes.getValue("attr.name");
+            String attrType = attributes.getValue("attr.type");
+            currentKey = new Key(id, whatFor, attrName, attrType);
+            keys.add(currentKey);
+        }
+        if (qName.equals("default") && currentKey != null) {
+            currentText = new StringBuilder();
         }
         System.out.println("Start Element : " + qName);
         System.out.println("Attributes: ");
@@ -47,13 +56,33 @@ public class GraphMLHandler extends DefaultHandler {
     }
 
     @Override
+    public void characters(char[] ch, int start, int length) {
+        // Append characters to the StringBuilder, we see this after the default start element.
+        if (currentText != null) {
+            currentText.append(ch, start, length);
+        }
+    }
+
+    @Override
     public void endElement(String uri, String localName, String qName) {
         System.out.println("End Element: " + qName);
+        // We finished with the current key, so set it null.
+        if (qName.equals("key")) {
+            currentKey = null;
+        }
+        if (qName.equals("default") && currentKey != null && currentText != null) {
+            // By the end element we have the text if there will be any.
+            currentKey.setDefaultValue(currentText.toString());
+            currentText = null;
+        }
     }
 
     public void endDocument() {
         System.out.println("End Document.");
         System.out.println(graph);
+        for (Key key : keys) {
+            System.out.println(key.toString());
+        }
     }
 
 }

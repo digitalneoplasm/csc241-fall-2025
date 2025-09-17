@@ -7,6 +7,8 @@ Sample Key:
 
 package xml;
 
+import org.w3c.dom.ls.LSOutput;
+
 public class Key {
     private String id;
     private String nodeOrEdge;
@@ -32,6 +34,16 @@ public class Key {
 
     public String getDefaultValue() {
         return defaultValue;
+    }
+
+    public void setDefaultValue(String defaultValue) {
+        this.defaultValue = defaultValue;
+    }
+
+    @Override
+    public String toString() {
+        return "Key: " + id + " for: " + nodeOrEdge + " name: " + name + " dataType: "
+                + dataType + (defaultValue == null ? "" : " default value: " + defaultValue);
     }
 
 }
