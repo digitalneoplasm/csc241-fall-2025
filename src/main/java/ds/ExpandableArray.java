@@ -6,6 +6,11 @@ public class ExpandableArray extends AbstractList<String> {
     private String[] data;
     private int numElts;
 
+    public ExpandableArray() {
+        data = new String[2];
+        numElts = 0;
+    }
+
     private void growArray() {
         String[] bigger = new String[data.length * 2];
         for (int i = 0; i < data.length; i++) {
@@ -30,13 +35,18 @@ public class ExpandableArray extends AbstractList<String> {
         if (numElts == data.length) {
             growArray();
         }
-        // Case 2: Adding at the end (just add and be done)
-
-        // Case 3: Adding at beginning/middle (shift elts over)
+        // Case 2: Adding at beginning/middle (shift elts over)
+        // Make space...
+        if ( index < numElts ) {
+            for (int i = numElts; i >= index; i--) {
+                data[i] = data[i - 1];
+            }
+        }
+        // Do the addition, and also...
+        // Case 3: Adding at the end (just add and be done)
+        data[index] = item;
+        numElts++;
     }
-
-
-
 
     /**
      * {@inheritDoc}
@@ -46,8 +56,16 @@ public class ExpandableArray extends AbstractList<String> {
      */
     @Override
     public String get(int index) {
-        return "";
+        if (index < 0 || index > numElts - 1) {
+            throw new IndexOutOfBoundsException();
+        }
+        return data[index];
     }
+
+    // TODO:
+    // - remove
+    // - set
+    // - clear
 
     @Override
     public int size() {
