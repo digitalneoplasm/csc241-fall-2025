@@ -48,6 +48,33 @@ public class ExpandableArray extends AbstractList<String> {
         numElts++;
     }
 
+    @Override
+    public String set(int index, String element) {
+        if (index < 0 || index >= numElts)
+            throw new IndexOutOfBoundsException();
+        String old = data[index];
+        data[index] = element;
+        return old;
+    }
+
+    @Override
+    public String remove(int index) {
+        if (index < 0 || index >= numElts)
+            throw new IndexOutOfBoundsException();
+        String old = data[index];
+        for (int i = index; i < numElts-1; i++) {
+            data[i] = data[i+1];
+        }
+        numElts--;
+        return old;
+    }
+
+    @Override
+    public void clear() {
+        numElts = 0;
+        data = new String[10];
+    }
+
     /**
      * {@inheritDoc}
      *
@@ -63,9 +90,11 @@ public class ExpandableArray extends AbstractList<String> {
     }
 
     // TODO:
-    // - remove
-    // - set
-    // - clear
+    // - set -  	set(int index, String element) - Replaces the element at the specified position in this list with
+    //                                               the specified element. Returns elt previously at that position.
+    // - clear - Removes all of the elements from this list
+    // - remove -  	remove(int index) - Removes the element at the specified position in this list. Return the removed
+    //                                  value.
 
     @Override
     public int size() {
