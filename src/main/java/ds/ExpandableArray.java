@@ -12,12 +12,14 @@ public class ExpandableArray extends AbstractList<String> {
     }
 
     private void growArray() {
-        String[] bigger = new String[data.length * 2];
-        for (int i = 0; i < data.length; i++) {
+        String[] bigger = new String[data.length * 2]; // 2n space (assuming data has size n)
+        for (int i = 0; i < data.length; i++) { // Some small constant amt of space for i.
             bigger[i] = data[i];
         }
         data = bigger;
     }
+    // O(n) space complexity.
+    // O(n) time complexity. (loops through data just once).
 
     /**
      *
@@ -47,6 +49,8 @@ public class ExpandableArray extends AbstractList<String> {
         data[index] = item;
         numElts++;
     }
+    // Time complexity - worst case - O(n), best case O(1)
+    // Space complexity - worst case - O(n) when we have to grow. Best case O(1). 
 
     @Override
     public String set(int index, String element) {
