@@ -35,15 +35,15 @@
 
 package ds;
 
-public class SinglyLinkedList {
-    private Node head;
+public class SinglyLinkedList<E> {
+    private Node<E> head;
     private int size = 0;
 
     public SinglyLinkedList() {
         // No need for setting fields.
     }
 
-    public void addFirst(String s) {
+    public void addFirst(E s) {
         // Two cases:
         // 1) Our list is empty.
         // Initial state: head -> null
@@ -62,7 +62,7 @@ public class SinglyLinkedList {
 //        }
         // Right side gets evaluated
         // Then assignment happens.
-        head = new Node(s, head);
+        head = new Node<E>(s, head);
 
         size++;
 
@@ -76,19 +76,19 @@ public class SinglyLinkedList {
 //            result += temp.data + " ";
 //            temp = temp.next;
 //        }
-        for (Node temp = head; temp != null; temp = temp.next) {
+        for (Node<E> temp = head; temp != null; temp = temp.next) {
             result.append(temp.data).append(" ");
         }
         return result.toString();
     }
 
  // Find the elt at index i, return it's data. Remember error checking!
-    public String get(int i) {
+    public E get(int i) {
         if ( i < 0 || i >= size ) {
             throw new IndexOutOfBoundsException();
         }
         int currIndex = 0;
-        Node currNode = head;
+        Node<E> currNode = head;
         while (currIndex < i) {
             currIndex++;
             currNode = currNode.next;
@@ -96,14 +96,19 @@ public class SinglyLinkedList {
         return currNode.data;
     }
 
+    //@Override
+//    public E remove(int index) {
+//
+//    }
+
     // 2 kinds of nested classes:
     // 1) static nested class - can only access static members of the outer class.
     // 2) inner class - relies on the state of the 'this' instance of the outer class.
-    private static class Node {
-        private String data;
-        private Node next;
+    private static class Node<E> {
+        private E data;
+        private Node<E> next;
 
-        public Node(String data, Node next) {
+        public Node(E data, Node<E> next) {
             this.data = data;
             this.next = next;
         }
