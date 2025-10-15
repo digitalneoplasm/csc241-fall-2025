@@ -70,16 +70,30 @@ public class SinglyLinkedList {
 
     @Override
     public String toString() {
-        String result = "";
+        StringBuilder result = new StringBuilder();
 //        Node temp = head;
 //        for (int i = 0; i < size; i++) {
 //            result += temp.data + " ";
 //            temp = temp.next;
 //        }
         for (Node temp = head; temp != null; temp = temp.next) {
-            result += temp.data + " ";
+            result.append(temp.data).append(" ");
         }
-        return result;
+        return result.toString();
+    }
+
+ // Find the elt at index i, return it's data. Remember error checking!
+    public String get(int i) {
+        if ( i < 0 || i >= size ) {
+            throw new IndexOutOfBoundsException();
+        }
+        int currIndex = 0;
+        Node currNode = head;
+        while (currIndex < i) {
+            currIndex++;
+            currNode = currNode.next;
+        }
+        return currNode.data;
     }
 
     // 2 kinds of nested classes:
