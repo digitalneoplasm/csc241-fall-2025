@@ -2,7 +2,7 @@ package ds;
 
 public class ExpandableArrayTest {
     public static void main(String[] args) {
-        ExpandableArray ea = new ExpandableArray();
+        ExpandableArray<String> ea = new ExpandableArray<>();
         ea.add("a");
         ea.add("b");
         ea.add("d");

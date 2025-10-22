@@ -2,17 +2,19 @@ package ds;
 
 import java.util.AbstractList;
 
-public class ExpandableArray extends AbstractList<String> {
-    private String[] data;
+public class ExpandableArray<T extends Comparable<T>> extends AbstractList<T> {
+    private T[] data;
     private int numElts;
 
+    @SuppressWarnings("unchecked")
     public ExpandableArray() {
-        data = new String[2];
+        data = (T[]) new Comparable[2];
         numElts = 0;
     }
 
+    @SuppressWarnings("unchecked")
     private void growArray() {
-        String[] bigger = new String[data.length * 2]; // 2n space (assuming data has size n)
+        T[] bigger = (T[]) new Comparable[data.length * 2]; // 2n space (assuming data has size n)
         for (int i = 0; i < data.length; i++) { // Some small constant amt of space for i.
             bigger[i] = data[i];
         }
@@ -28,7 +30,7 @@ public class ExpandableArray extends AbstractList<String> {
      * @throws IndexOutOfBoundsException {@inheritDoc}
      */
     @Override
-    public void add(int index, String item) {
+    public void add(int index, T item) {
         // Case 1: index < 0 || index > numElts - error cases.
         if (index < 0 || index > numElts) {
             throw new IndexOutOfBoundsException();
@@ -53,19 +55,19 @@ public class ExpandableArray extends AbstractList<String> {
     // Space complexity - worst case - O(n) when we have to grow. Best case O(1). 
 
     @Override
-    public String set(int index, String element) {
+    public T set(int index, T element) {
         if (index < 0 || index >= numElts)
             throw new IndexOutOfBoundsException();
-        String old = data[index];
+        T old = data[index];
         data[index] = element;
         return old;
     }
 
     @Override
-    public String remove(int index) {
+    public T remove(int index) {
         if (index < 0 || index >= numElts)
             throw new IndexOutOfBoundsException();
-        String old = data[index];
+        T old = (T) data[index];
         for (int i = index; i < numElts-1; i++) {
             data[i] = data[i+1];
         }
@@ -73,10 +75,11 @@ public class ExpandableArray extends AbstractList<String> {
         return old;
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public void clear() {
         numElts = 0;
-        data = new String[10];
+        data = (T[]) new Comparable[10];
     }
 
     /**
@@ -86,22 +89,23 @@ public class ExpandableArray extends AbstractList<String> {
      * @throws IndexOutOfBoundsException {@inheritDoc}
      */
     @Override
-    public String get(int index) {
+    public T get(int index) {
         if (index < 0 || index > numElts - 1) {
             throw new IndexOutOfBoundsException();
         }
-        return data[index];
+        return (T) data[index];
     }
-
-    // TODO:
-    // - set -  	set(int index, String element) - Replaces the element at the specified position in this list with
-    //                                               the specified element. Returns elt previously at that position.
-    // - clear - Removes all of the elements from this list
-    // - remove -  	remove(int index) - Removes the element at the specified position in this list. Return the removed
-    //                                  value.
 
     @Override
     public int size() {
         return numElts;
     }
+
+    // Sorting Experiments //
+    public void bubbleSort() {
+        // Do an in-place bubble sort.
+        // Use the fact that the elements are comparable to sort them (i.e., use compareTo).
+        // a.compareTo(b) < 0 means a < b.
+    }
+
 }
