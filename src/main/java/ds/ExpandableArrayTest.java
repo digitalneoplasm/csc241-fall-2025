@@ -1,5 +1,7 @@
 package ds;
 
+import java.util.Random;
+
 public class ExpandableArrayTest {
     public static void main(String[] args) {
         ExpandableArray<String> ea = new ExpandableArray<>();
@@ -18,5 +20,15 @@ public class ExpandableArrayTest {
         System.out.println(ea);
         ea.clear();
         System.out.println(ea);
+
+        System.out.println("--- sort tests --- ");
+        ExpandableArray<Integer> sortTest = new ExpandableArray<>();
+        Random r = new Random();
+        for (int i = 0; i < 10; i++) {
+            sortTest.add(r.nextInt(100));
+        }
+        System.out.println("Initial list: " + sortTest);
+        sortTest.bubbleSort();
+        System.out.println("Sorted list: " + sortTest);
     }
 }

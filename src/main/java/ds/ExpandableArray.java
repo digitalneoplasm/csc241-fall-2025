@@ -1,6 +1,7 @@
 package ds;
 
 import java.util.AbstractList;
+import java.util.Arrays;
 
 public class ExpandableArray<T extends Comparable<T>> extends AbstractList<T> {
     private T[] data;
@@ -67,7 +68,7 @@ public class ExpandableArray<T extends Comparable<T>> extends AbstractList<T> {
     public T remove(int index) {
         if (index < 0 || index >= numElts)
             throw new IndexOutOfBoundsException();
-        T old = (T) data[index];
+        T old = data[index];
         for (int i = index; i < numElts-1; i++) {
             data[i] = data[i+1];
         }
@@ -93,7 +94,7 @@ public class ExpandableArray<T extends Comparable<T>> extends AbstractList<T> {
         if (index < 0 || index > numElts - 1) {
             throw new IndexOutOfBoundsException();
         }
-        return (T) data[index];
+        return data[index];
     }
 
     @Override
@@ -101,11 +102,86 @@ public class ExpandableArray<T extends Comparable<T>> extends AbstractList<T> {
         return numElts;
     }
 
+    public ExpandableArray<T> copy() {
+        ExpandableArray<T> copy = new ExpandableArray<>();
+        copy.data = Arrays.copyOf(data, data.length);
+        copy.numElts = numElts;
+        return copy;
+    }
+
     // Sorting Experiments //
     public void bubbleSort() {
         // Do an in-place bubble sort.
         // Use the fact that the elements are comparable to sort them (i.e., use compareTo).
         // a.compareTo(b) < 0 means a < b.
+        for (int i = 0; i < numElts; i++) {
+            for (int j = 1; j < numElts - i; j++) {
+                if (data[j].compareTo(data[j-1]) < 0) {
+                    T temp = data[j];
+                    data[j] = data[j-1];
+                    data[j-1] = temp;
+                }
+            }
+        }
+    }
+
+    public void insertionSort() {
+
+    }
+
+    public void selectionSort() {
+        // limit starts at the end of numbers, moves backwards
+        // one index at a time. When index is at 1, we're done!
+        for (int limit = numElts - 1; limit > 0; limit = limit -1  ){
+            // 1) Get the index of the maximum element in the list of
+            // data up to the limit.
+            int maxIdx = maxIndex(limit);
+            // 2) Swap the maximum element with the element at the limit.
+            swap(maxIdx, limit);
+        }
+    }
+
+    private void swap(int maxIdx, int limit) {
+        T temp = this.get(maxIdx);
+        this.set(maxIdx, this.get(limit));
+        this.set(limit, temp);
+    }
+
+    private int maxIndex(int limit) {
+        // Find the max value in data up to limit, but also keep track
+        // of what the index is of that max value. Return that index.
+
+        // Our initial champion is the first element of data.
+        T champion = this.get(0);
+        int champIndex = 0;
+        // Walk through the List up to and including the limit
+        // For each element in data (these are our challengers!),
+        // if the challenger is bigger than our champion, make it the new
+        // champion.
+        for ( int i = 1; i <= limit; i = i + 1) {
+            T challenger = this.get(i);
+            if ( challenger.compareTo(champion) > 0 ){
+                champion = challenger;
+                champIndex = i;
+            }
+        }
+        // Return the champion
+        return champIndex;
     }
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
