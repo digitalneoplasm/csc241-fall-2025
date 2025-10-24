@@ -2,7 +2,6 @@ package test;
 
 import ds.ExpandableArray;
 import org.openjdk.jmh.annotations.*;
-import java.util.Arrays;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
@@ -35,21 +34,27 @@ public class SortingBenchmark {
     }
 
     // Sorting benchmarks
-    @Benchmark
-    public void bubbleSortRandomBenchmark() {
-        ExpandableArray<Integer> ea = unsorted.copy();
-        ea.bubbleSort();
-    }
-
 //    @Benchmark
-//    public void bubbleSortPresortedBenchmark() {
-//        ExpandableArray<Integer> ea = presorted.copy();
+//    public void bubbleSortRandomBenchmark() {
+//        ExpandableArray<Integer> ea = unsorted.copy();
 //        ea.bubbleSort();
 //    }
 
     @Benchmark
-    public void selectionSortRandomBenchmark() {
-        ExpandableArray<Integer> ea = unsorted.copy();
-        ea.selectionSort();
+    public void bubbleSortPresortedBenchmark() {
+        ExpandableArray<Integer> ea = presorted.copy();
+        ea.bubbleSort();
     }
+
+//    @Benchmark
+//    public void selectionSortRandomBenchmark() {
+//        ExpandableArray<Integer> ea = unsorted.copy();
+//        ea.selectionSort();
+//    }
+//
+//    @Benchmark
+//    public void selectionSortPresortedBenchmark() {
+//        ExpandableArray<Integer> ea = presorted.copy();
+//        ea.selectionSort();
+//    }
 }

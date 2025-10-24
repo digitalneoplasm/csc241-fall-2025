@@ -115,13 +115,16 @@ public class ExpandableArray<T extends Comparable<T>> extends AbstractList<T> {
         // Use the fact that the elements are comparable to sort them (i.e., use compareTo).
         // a.compareTo(b) < 0 means a < b.
         for (int i = 0; i < numElts; i++) {
+            boolean changedData = false; // Optomization for pre-sorted data.
             for (int j = 1; j < numElts - i; j++) {
                 if (data[j].compareTo(data[j-1]) < 0) {
                     T temp = data[j];
                     data[j] = data[j-1];
                     data[j-1] = temp;
+                    changedData = true;
                 }
             }
+            if (!changedData) return;
         }
     }
 
@@ -130,7 +133,7 @@ public class ExpandableArray<T extends Comparable<T>> extends AbstractList<T> {
     }
 
     public void selectionSort() {
-        // limit starts at the end of numbers, moves backwards
+        // limit starts at the end of data, moves backwards
         // one index at a time. When index is at 1, we're done!
         for (int limit = numElts - 1; limit > 0; limit = limit -1  ){
             // 1) Get the index of the maximum element in the list of
