@@ -1,5 +1,8 @@
 package ds;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class BST<E extends Comparable<E>> {
     private Node<E> root;
     private int size;
@@ -109,10 +112,31 @@ public class BST<E extends Comparable<E>> {
                 Remove p.
      */
 
+    public List<E> sorted() {
+        ArrayList<E> result = new ArrayList<>();
+        inOrderTraversal(root, result);
+        return result;
+    }
+
+    private void inOrderTraversal(Node<E> currentNode, ArrayList<E> result) {
+        // Left things are < data.
+        if (currentNode.left != null) {
+            inOrderTraversal(currentNode.left, result);
+        }
+
+        // Data is next.
+        result.add(currentNode.data);
+
+        // Right things are > data
+        if (currentNode.right != null) {
+            inOrderTraversal(currentNode.right, result);
+        }
+    }
+
     private static class Node<E extends Comparable<E>> {
-        private E data;
-        private Node<E> left;
-        private Node<E> right;
+        E data;
+        Node<E> left;
+        Node<E> right;
 
         public Node(E data) {
             this.data = data;
