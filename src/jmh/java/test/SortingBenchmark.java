@@ -1,5 +1,6 @@
 package test;
 
+import algorithms.MergeSort;
 import ds.BST;
 import ds.ExpandableArray;
 import org.openjdk.jmh.annotations.*;
@@ -18,19 +19,26 @@ public class SortingBenchmark {
     public int arraySize;
 
     private ExpandableArray<Integer> unsorted;
+    private Integer[] unsortedArray;
     private ExpandableArray<Integer> presorted;
+    private Integer[] presortedArray;
 
     // Re-initialize for each iteration to ensure fresh data
     @Setup(Level.Iteration)
     public void setup() {
         unsorted = new ExpandableArray<>();
+        unsortedArray = new Integer[arraySize];
         Random random = new Random();
         for (int i = 0; i < arraySize; i++) {
-            unsorted.add(random.nextInt());
+            int randNum = random.nextInt();
+            unsorted.add(randNum);
+            unsortedArray[i] = randNum;
         }
         presorted = new ExpandableArray<>();
+        presortedArray = new Integer[arraySize];
         for (int i = 0; i < arraySize; i++) {
             presorted.add(i);
+            presortedArray[i] = i;
         }
     }
 
@@ -60,20 +68,30 @@ public class SortingBenchmark {
     }
 
     @Benchmark
-    public void bstSortUnsortedBenchmark() {
-        BST<Integer> bst = new BST<>();
-        for (int i = 0; i < unsorted.size(); i++) {
-            bst.insert(unsorted.get(i));
-        }
-        bst.sorted();
+    public void mergeSortRandomBenchmark() {
+        MergeSort.mergeSort(unsortedArray);
     }
 
     @Benchmark
-    public void bstSortPresortedBenchmark() {
-        BST<Integer> bst = new BST<>();
-        for (int i = 0; i < presorted.size(); i++) {
-            bst.insert(presorted.get(i));
-        }
-        bst.sorted();
+    public void mergeSortPresortedBenchmark() {
+        MergeSort.mergeSort(presortedArray);
     }
+
+//    @Benchmark
+//    public void bstSortUnsortedBenchmark() {
+//        BST<Integer> bst = new BST<>();
+//        for (int i = 0; i < unsorted.size(); i++) {
+//            bst.insert(unsorted.get(i));
+//        }
+//        bst.sorted();
+//    }
+//
+//    @Benchmark
+//    public void bstSortPresortedBenchmark() {
+//        BST<Integer> bst = new BST<>();
+//        for (int i = 0; i < presorted.size(); i++) {
+//            bst.insert(presorted.get(i));
+//        }
+//        bst.sorted();
+//    }
 }

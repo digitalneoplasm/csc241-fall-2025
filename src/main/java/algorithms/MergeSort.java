@@ -1,14 +1,18 @@
 package algorithms;
 
+import java.util.Arrays;
+
 public class MergeSort {
+
+    private MergeSort() {} // Utility class, hide public constructor
 
     public static <T extends Comparable<T>> void  mergeSort(T[] data) {
         // Data of length 1 or 0 is already sorted, nothing to do.
         if (data.length > 1) {
             // Create left and right arrays of half size.
             int halfSize = data.length / 2;
-            T[] left = (T[]) new Comparable[halfSize];
-            T[] right = (T[]) new Comparable[data.length - halfSize];
+            T[] left = Arrays.copyOfRange(data, 0, halfSize);
+            T[] right = Arrays.copyOfRange(data, halfSize, data.length);
 
             // Sort the left side
             mergeSort(left);
@@ -20,7 +24,7 @@ public class MergeSort {
         }
     }
 
-    public static <T extends Comparable<T>> void merge(T[] left, T[] right, T[] result) {
+    private static <T extends Comparable<T>> void merge(T[] left, T[] right, T[] result) {
         int l = 0; // idx in left
         int r = 0; // idx in right
         int o = 0; // idx in output
@@ -41,6 +45,20 @@ public class MergeSort {
         while (r < right.length) {
             result[o++] = right[r++];
         }
+    }
+
+    // Testing
+    public static void main(String[] args) {
+        Integer[] data = {25, 67, 4, 12, 14, 42, 96};
+        for (Integer i : data) {
+            System.out.print(i + " ");
+        }
+        System.out.println();
+        mergeSort(data);
+        for (Integer i : data) {
+            System.out.print(i + " ");
+        }
+        System.out.println();
     }
 
 }
