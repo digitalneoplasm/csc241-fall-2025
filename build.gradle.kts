@@ -24,3 +24,9 @@ tasks.test {
 tasks.classes {
     finalizedBy("jmhClasses")
 }
+
+tasks.jar {
+    manifest {
+        attributes["Main-Class"] = "ds.BSTTest"
+    }
+}
