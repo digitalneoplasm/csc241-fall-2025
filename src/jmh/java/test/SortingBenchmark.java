@@ -1,6 +1,7 @@
 package test;
 
 import algorithms.MergeSort;
+import algorithms.QuickSort;
 import ds.BST;
 import ds.ExpandableArray;
 import org.openjdk.jmh.annotations.*;
@@ -43,17 +44,17 @@ public class SortingBenchmark {
     }
 
     // Sorting benchmarks
-//    @Benchmark
-//    public void bubbleSortRandomBenchmark() {
-//        ExpandableArray<Integer> ea = unsorted.copy();
-//        ea.bubbleSort();
-//    }
-//
-//    @Benchmark
-//    public void bubbleSortPresortedBenchmark() {
-//        ExpandableArray<Integer> ea = presorted.copy();
-//        ea.bubbleSort();
-//    }
+    @Benchmark
+    public void bubbleSortRandomBenchmark() {
+        ExpandableArray<Integer> ea = unsorted.copy();
+        ea.bubbleSort();
+    }
+
+    @Benchmark
+    public void bubbleSortPresortedBenchmark() {
+        ExpandableArray<Integer> ea = presorted.copy();
+        ea.bubbleSort();
+    }
 
     @Benchmark
     public void selectionSortRandomBenchmark() {
@@ -69,29 +70,40 @@ public class SortingBenchmark {
 
     @Benchmark
     public void mergeSortRandomBenchmark() {
-        MergeSort.mergeSort(unsortedArray);
+        MergeSort.mergeSort(unsortedArray.clone());
     }
 
     @Benchmark
     public void mergeSortPresortedBenchmark() {
-        MergeSort.mergeSort(presortedArray);
+        MergeSort.mergeSort(presortedArray.clone());
     }
 
-//    @Benchmark
-//    public void bstSortUnsortedBenchmark() {
-//        BST<Integer> bst = new BST<>();
-//        for (int i = 0; i < unsorted.size(); i++) {
-//            bst.insert(unsorted.get(i));
-//        }
-//        bst.sorted();
-//    }
-//
-//    @Benchmark
-//    public void bstSortPresortedBenchmark() {
-//        BST<Integer> bst = new BST<>();
-//        for (int i = 0; i < presorted.size(); i++) {
-//            bst.insert(presorted.get(i));
-//        }
-//        bst.sorted();
-//    }
+
+    @Benchmark
+    public void quickSortRandomBenchmark() {
+        QuickSort.quickSort(unsortedArray.clone());
+    }
+
+    @Benchmark
+    public void quickSortPresortedBenchmark() {
+        QuickSort.quickSort(presortedArray.clone());
+    }
+
+    @Benchmark
+    public void bstSortUnsortedBenchmark() {
+        BST<Integer> bst = new BST<>();
+        for (int i = 0; i < unsorted.size(); i++) {
+            bst.insert(unsorted.get(i));
+        }
+        bst.sorted();
+    }
+
+    @Benchmark
+    public void bstSortPresortedBenchmark() {
+        BST<Integer> bst = new BST<>();
+        for (int i = 0; i < presorted.size(); i++) {
+            bst.insert(presorted.get(i));
+        }
+        bst.sorted();
+    }
 }
